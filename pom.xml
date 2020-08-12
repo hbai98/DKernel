@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <properties>
+        <bundle.symbolicName>Cytoscape.plugin</bundle.symbolicName>
+        <bundle.namespace>Cytoscape.plugin.BNMatch.internal</bundle.namespace>
+        <project.version>1.2</project.version>
+        <!--dependencies version-->
+        <ejml.version>0.39</ejml.version>
+        <cytoscape.api.version>3.7.0</cytoscape.api.version>
+        <osgi.api.version>4.2.0</osgi.api.version>
+        <maven-bundle-plugin.version>4.2.1</maven-bundle-plugin.version>
+        <miglayout.version>5.2</miglayout.version>
+        <jgrapht.core.version>1.5.0</jgrapht.core.version>
+        <commons-lang3.version>3.11</commons-lang3.version>
+        <!--plugins version-->
+        <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
+    </properties>
+    <groupId>Cytoscape.plugin.Dkernel</groupId>
+    <artifactId>Dkernel</artifactId>
+    <packaging>bundle</packaging>
+    <version>1.0</version>
+    <build>
+        <plugins>
+            <plugin>
+                <inherited>true</inherited>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <optimize>true</optimize>
+                    <showWarnings>true</showWarnings>
+                    <showDeprecation>true</showDeprecation>
+                    <compilerArguments>
+                        <Xmaxwarns>10000</Xmaxwarns>
+                        <Xmaxerrs>10000</Xmaxerrs>
+                    </compilerArguments>
+                </configuration>
+            </plugin>
+            <!-- Generates the OSGi metadata based on the osgi.bnd file. -->
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>${maven-bundle-plugin.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>${bundle.symbolicName}</Bundle-SymbolicName>
+                        <Bundle-Version>${project.version}</Bundle-Version>
+                        <Export-Package>!${bundle.namespace}.*</Export-Package>
+                        <Private-Package>${bundle.namespace}.*</Private-Package>
+                        <Bundle-Activator>${bundle.namespace}.CyActivator</Bundle-Activator>
+                        <Import-Package>
+                            !tech.tablesaw.*,!org.swinglabs.swingx,!org.jdesktop.swingx.*,*;resolution:=optional
+                        </Import-Package>
+                        <Embed-Dependency>
+                            * ;scope=!provided|test; groupId=!org.cytoscape
+                        </Embed-Dependency>
+                        <Embed-Transitive>true</Embed-Transitive>
+                        <Embed-Transitive>true</Embed-Transitive>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>nexus-aliyun</id>
+            <name>Nexus aliyun</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+        </repository>
+        <repository>
+            <id>cytoscape_snapshots</id>
+            <snapshots>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <name>Cytoscape Snapshots</name>
+            <url>http://code.cytoscape.org/nexus/content/repositories/snapshots/</url>
+        </repository>
+        <repository>
+            <id>cytoscape_releases</id>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+            </releases>
+            <name>Cytoscape Releases</name>
+            <url>http://code.cytoscape.org/nexus/content/repositories/releases/</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <!-- HGA algorithm -->
+        <dependency>
+            <groupId>BHT</groupId>
+            <artifactId>Algorithms</artifactId>
+            <version>1.0</version>
+            <optional>true</optional>
+            <scope>compile</scope>
+        </dependency>
+        <!-- java linear algebra lib for algorithms building -->
+        <dependency>
+            <groupId>org.ejml</groupId>
+            <artifactId>ejml-all</artifactId>
+            <version>${ejml.version}</version>
+        </dependency>
+        <!--network data structure base-->
+        <dependency>
+            <groupId>org.jgrapht</groupId>
+            <artifactId>jgrapht-core</artifactId>
+            <version>${jgrapht.core.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <!--java swing layout-->
+        <dependency>
+            <groupId>com.miglayout</groupId>
+            <artifactId>miglayout-swing</artifactId>
+            <scope>compile</scope>
+            <optional>true</optional>
+            <version>${miglayout.version}</version>
+        </dependency>
+        <!--some tools-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
+        </dependency>
+        <!--cytoscape-->
+        <dependency>
+            <groupId>org.cytoscape</groupId>
+            <artifactId>model-api</artifactId>
+            <version>${cytoscape.api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.cytoscape</groupId>
+            <artifactId>session-api</artifactId>
+            <version>${cytoscape.api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.cytoscape</groupId>
+            <artifactId>swing-application-api</artifactId>
+            <version>${cytoscape.api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.cytoscape</groupId>
+            <artifactId>work-api</artifactId>
+            <version>${cytoscape.api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.cytoscape</groupId>
+            <artifactId>service-api</artifactId>
+            <version>${cytoscape.api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.cytoscape</groupId>
+            <artifactId>viewmodel-api</artifactId>
+            <version>${cytoscape.api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.cytoscape</groupId>
+            <artifactId>layout-api</artifactId>
+            <version>${cytoscape.api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.core</artifactId>
+            <version>${osgi.api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.ops4j.pax.logging</groupId>
+            <artifactId>pax-logging-api</artifactId>
+            <version>2.0.4</version>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
+</project>
