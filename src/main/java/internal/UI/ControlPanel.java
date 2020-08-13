@@ -1,6 +1,10 @@
 package internal.UI;
 
+import internal.Canvas.ColorShade;
+import internal.Tasks.DKernelTask;
 import internal.Tasks.InputCheckTask;
+import internal.Tasks.RenderingTask;
+import internal.util.InputsAndServices;
 import net.miginfocom.swing.MigLayout;
 import org.cytoscape.application.swing.CytoPanelComponent;
 import org.cytoscape.application.swing.CytoPanelName;
@@ -15,11 +19,9 @@ import org.cytoscape.work.TaskManager;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.io.File;
 
-import static internal.UI.InputsAndServices.*;
+import static internal.util.InputsAndServices.*;
 
 
 // Define a CytoPanel class
@@ -34,6 +36,7 @@ public class ControlPanel implements CytoPanelComponent, NetworkAddedListener, N
     private JButton analyzeButton;
     private JTextField lossFactor;
     private JPanel paramsPanel;
+    private JComboBox<Color> colorComboBox;
 
     public ControlPanel() {
         this.taskManager = InputsAndServices.taskManager;
@@ -50,15 +53,23 @@ public class ControlPanel implements CytoPanelComponent, NetworkAddedListener, N
             setUserInput();
             TaskIterator it = new TaskIterator();
             InputCheckTask inputCheckTask = new InputCheckTask();
+            DKernelTask dkernelTask = new DKernelTask();
+            RenderingTask renderingTask = new RenderingTask();
+
             it.append(inputCheckTask);
+            it.append(dkernelTask);
+            it.append(renderingTask);
+
             taskManager.execute(it);
         });
-
+        // color selector
+        colorComboBox.addActionListener(actionEvent->{
+            InputsAndServices.color = (Color) colorComboBox.getSelectedItem();
+        });
     }
 
     private void setUserInput() {
-        // shift all parameters from UI to a specific class to export users's information
-        // networks
+        // shift all parameters from UI to a specific class to export users' information
         // check if there's no networks input
         InputsAndServices.network = (CyNetwork) networkJComboBox.getSelectedItem();
         loss = Double.parseDouble(lossFactor.getText());
@@ -87,6 +98,11 @@ public class ControlPanel implements CytoPanelComponent, NetworkAddedListener, N
         paramsPanel.setBorder(new TitledBorder("Parameters"));
         JLabel lossLabel = new JLabel("loss :");
         lossFactor = new JTextField("1");
+        JLabel color = new JLabel("Select a color :");
+        colorComboBox = new JComboBox<>();
+        colorComboBox.setRenderer(new ColorComboBoxRender<>());
+        ColorShade.colors.forEach(e->colorComboBox.addItem(e));
+        colorComboBox.setSelectedItem(Color.red);
         // analysis button
         analyzeButton = new JButton("Propagate");
         // add to graphsPanel
@@ -95,6 +111,8 @@ public class ControlPanel implements CytoPanelComponent, NetworkAddedListener, N
         // paramsPanel
         paramsPanel.add(lossLabel);
         paramsPanel.add(lossFactor);
+        paramsPanel.add(color);
+        paramsPanel.add(colorComboBox);
         // rootPanel
         rootPanel = new JPanel(new MigLayout("wrap 1", "[grow]", "[grow]"));
         rootPanel.add(graphsPanel, "grow");

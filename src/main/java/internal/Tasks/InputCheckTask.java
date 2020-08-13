@@ -1,6 +1,8 @@
 package internal.Tasks;
 
-import internal.UI.InputsAndServices;
+import internal.util.InputsAndServices;
+import internal.util.CytoUtils;
+import org.cytoscape.model.CyNetwork;
 import org.cytoscape.work.AbstractTask;
 import org.cytoscape.work.TaskMonitor;
 
@@ -14,7 +16,7 @@ public class InputCheckTask extends AbstractTask {
             InputsAndServices.logger.error("Network should be loaded first.");
             return;
         }
-        
-
+        CyNetwork network = InputsAndServices.network;
+        InputsAndServices.algNet = CytoUtils.convert(network);
     }
 }

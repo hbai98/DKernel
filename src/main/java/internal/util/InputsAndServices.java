@@ -1,4 +1,4 @@
-package internal.UI;
+package internal.util;
 
 import DS.Matrix.SimMat;
 import DS.Network.UndirectedGraph;
@@ -16,10 +16,12 @@ import org.cytoscape.view.model.CyNetworkViewManager;
 import org.cytoscape.view.vizmap.VisualMappingFunctionFactory;
 import org.cytoscape.work.TaskManager;
 import org.cytoscape.work.undo.UndoSupport;
+import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.awt.*;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
@@ -42,6 +44,8 @@ public final class InputsAndServices {
     public static double loss;
     public static List<CyNode> selected;
     public static CyNetwork network;
+    public static UndirectedGraph<String, DefaultEdge> algNet;
+    public static Color color;
 
     public static void initServices() {
         if(registrar!=null){

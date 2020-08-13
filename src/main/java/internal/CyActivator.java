@@ -4,7 +4,7 @@ package internal;
  * @Institute CS school,Shanghai University
  */
 import internal.UI.ControlPanel;
-import internal.UI.InputsAndServices;
+import internal.util.InputsAndServices;
 import org.cytoscape.application.swing.AbstractCyAction;
 import org.cytoscape.application.swing.CyAction;
 import org.cytoscape.application.swing.CytoPanelComponent;
