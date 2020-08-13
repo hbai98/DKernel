@@ -20,6 +20,8 @@ public class DKernelTask extends AbstractTask {
             String name = InputsAndServices.network.getRow(n).get(CyNetwork.NAME, String.class);// get nodes' name
             selectedG.addVertex(name);
         });
+        // save name node map for later use
+
         // run DK
         DK<String,DefaultEdge> dk = new DK<>(selectedG,InputsAndServices.algNet,InputsAndServices.loss);
         dk.run();
@@ -28,5 +30,7 @@ public class DKernelTask extends AbstractTask {
         // save it for further rendering process
         AlgData.scores = mat.data();
 
+        // create a new column in the table to record scores
+        
     }
 }
