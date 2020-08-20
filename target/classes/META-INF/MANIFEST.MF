@@ -1,0 +1,53 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1597921141359
+Build-Jdk: 14
+Built-By: Haotian Bai
+Bundle-Activator: Cytoscape.plugin.DKernel.internal.CyActivator
+Bundle-ClassPath: .,Algorithms-1.0.jar,ejml-all-0.39.jar,jsr305-3.0.2.ja
+ r,ejml-core-0.39.jar,ejml-fdense-0.39.jar,ejml-ddense-0.39.jar,ejml-cde
+ nse-0.39.jar,ejml-zdense-0.39.jar,ejml-dsparse-0.39.jar,ejml-simple-0.3
+ 9.jar,ejml-fsparse-0.39.jar,jgrapht-core-1.5.0.jar,jheaps-0.13.jar,migl
+ ayout-swing-5.2.jar,miglayout-core-5.2.jar,commons-lang3-3.11.jar
+Bundle-Description: DKernel uses Diffusion Kernel algorithm to propagate
+  sub-network and        return scores for each node when the system rea
+ ches a equilibrium state.
+Bundle-ManifestVersion: 2
+Bundle-Name: DKernel
+Bundle-SymbolicName: Cytoscape.plugin
+Bundle-Version: 1.1
+Created-By: Apache Maven Bundle Plugin
+Embed-Dependency: * ;scope=!provided|test; groupId=!org.cytoscape
+Embed-Transitive: true
+Embedded-Artifacts: Algorithms-1.0.jar;g="BHT";a="Algorithms";v="1.0",ej
+ ml-all-0.39.jar;g="org.ejml";a="ejml-all";v="0.39",jsr305-3.0.2.jar;g="
+ com.google.code.findbugs";a="jsr305";v="3.0.2",ejml-core-0.39.jar;g="or
+ g.ejml";a="ejml-core";v="0.39",ejml-fdense-0.39.jar;g="org.ejml";a="ejm
+ l-fdense";v="0.39",ejml-ddense-0.39.jar;g="org.ejml";a="ejml-ddense";v=
+ "0.39",ejml-cdense-0.39.jar;g="org.ejml";a="ejml-cdense";v="0.39",ejml-
+ zdense-0.39.jar;g="org.ejml";a="ejml-zdense";v="0.39",ejml-dsparse-0.39
+ .jar;g="org.ejml";a="ejml-dsparse";v="0.39",ejml-simple-0.39.jar;g="org
+ .ejml";a="ejml-simple";v="0.39",ejml-fsparse-0.39.jar;g="org.ejml";a="e
+ jml-fsparse";v="0.39",jgrapht-core-1.5.0.jar;g="org.jgrapht";a="jgrapht
+ -core";v="1.5.0",jheaps-0.13.jar;g="org.jheaps";a="jheaps";v="0.13",mig
+ layout-swing-5.2.jar;g="com.miglayout";a="miglayout-swing";v="5.2",migl
+ ayout-core-5.2.jar;g="com.miglayout";a="miglayout-core";v="5.2",commons
+ -lang3-3.11.jar;g="org.apache.commons";a="commons-lang3";v="3.11"
+Import-Package: com.aparapi;resolution:=optional,com.google.common.primi
+ tives;resolution:=optional,javax.swing;resolution:=optional,javax.swing
+ .border;resolution:=optional,javax.swing.text;resolution:=optional,org.
+ apache.commons.io;resolution:=optional,org.apache.poi.hssf.usermodel;re
+ solution:=optional,org.apache.poi.ss.usermodel;resolution:=optional,org
+ .apache.poi.xssf.usermodel;resolution:=optional,org.cytoscape.applicati
+ on.swing;resolution:=optional;version="[3.7,4)",org.cytoscape.event;res
+ olution:=optional;version="[3.7,4)",org.cytoscape.model;resolution:=opt
+ ional;version="[3.7,4)",org.cytoscape.model.events;resolution:=optional
+ ;version="[3.7,4)",org.cytoscape.service.util;resolution:=optional;vers
+ ion="[3.7,4)",org.cytoscape.view.model;resolution:=optional;version="[3
+ .7,4)",org.cytoscape.view.presentation.property;resolution:=optional;ve
+ rsion="[3.7,4)",org.cytoscape.view.vizmap;resolution:=optional;version=
+ "[3.7,4)",org.cytoscape.work;resolution:=optional;version="[3.7,4)",org
+ .cytoscape.work.undo;resolution:=optional;version="[3.7,4)",org.osgi.fr
+ amework;resolution:=optional;version="[1.5,2)",org.slf4j;resolution:=op
+ tional;version="[1.7,2)"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=11))"
+Tool: Bnd-4.2.0.201903051501

@@ -1,4 +1,4 @@
-package internal.util;
+package Cytoscape.plugin.DKernel.internal.util;
 
 import DS.Network.UndirectedGraph;
 import org.cytoscape.model.CyEdge;

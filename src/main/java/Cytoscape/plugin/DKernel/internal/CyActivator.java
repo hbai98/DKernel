@@ -1,10 +1,10 @@
-package internal;
+package Cytoscape.plugin.DKernel.internal;
 /**
  * @author Haotian Bai
  * @Institute CS school,Shanghai University
  */
-import internal.UI.ControlPanel;
-import internal.util.InputsAndServices;
+import Cytoscape.plugin.DKernel.internal.UI.ControlPanel;
+import Cytoscape.plugin.DKernel.internal.util.InputsAndServices;
 import org.cytoscape.application.swing.AbstractCyAction;
 import org.cytoscape.application.swing.CyAction;
 import org.cytoscape.application.swing.CytoPanelComponent;

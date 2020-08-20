@@ -1,4 +1,4 @@
-package internal.Canvas;
+package Cytoscape.plugin.DKernel.internal.Canvas;
 
 import java.awt.*;
 import java.util.*;
@@ -19,7 +19,7 @@ public class ColorShade {
         assert (echelon > 1);
         // echelon-1 times of brightening
         echelon -= 1;
-        double fraction = 1. / echelon;
+        double fraction = 0.88 / echelon;
         // List for colors
         List<Color> colors = new ArrayList<>(echelon);
         colors.add(init);

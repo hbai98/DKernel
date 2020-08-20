@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <properties>
         <bundle.symbolicName>Cytoscape.plugin</bundle.symbolicName>
-        <bundle.namespace>Cytoscape.plugin.BNMatch.internal</bundle.namespace>
+        <bundle.namespace>Cytoscape.plugin.DKernel.internal</bundle.namespace>
         <project.version>1.2</project.version>
         <!--dependencies version-->
         <ejml.version>0.39</ejml.version>
@@ -21,7 +21,13 @@
     <groupId>Cytoscape.plugin.Dkernel</groupId>
     <artifactId>Dkernel</artifactId>
     <packaging>bundle</packaging>
-    <version>1.0</version>
+    <version>1.1</version>
+    <description>
+        DKernel uses Diffusion Kernel algorithm to propagate sub-network and
+        return scores for each node when the system reaches a equilibrium state.
+    </description>
+    <name>DKernel</name>
+
     <build>
         <plugins>
             <plugin>
@@ -60,7 +66,6 @@
                         <Embed-Dependency>
                             * ;scope=!provided|test; groupId=!org.cytoscape
                         </Embed-Dependency>
-                        <Embed-Transitive>true</Embed-Transitive>
                         <Embed-Transitive>true</Embed-Transitive>
                     </instructions>
                 </configuration>

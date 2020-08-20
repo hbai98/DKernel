@@ -1,10 +1,9 @@
-package internal.UI;
+package Cytoscape.plugin.DKernel.internal.UI;
 
-import internal.Canvas.ColorShade;
-import internal.Tasks.DKernelTask;
-import internal.Tasks.InputCheckTask;
-import internal.Tasks.RenderingTask;
-import internal.util.InputsAndServices;
+import Cytoscape.plugin.DKernel.internal.Tasks.DKernelTask;
+import Cytoscape.plugin.DKernel.internal.Tasks.InputCheckTask;
+import Cytoscape.plugin.DKernel.internal.Tasks.RenderingTask;
+import Cytoscape.plugin.DKernel.internal.util.InputsAndServices;
 import net.miginfocom.swing.MigLayout;
 import org.cytoscape.application.swing.CytoPanelComponent;
 import org.cytoscape.application.swing.CytoPanelName;
@@ -21,12 +20,12 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 
-import static internal.util.InputsAndServices.*;
+import static Cytoscape.plugin.DKernel.internal.util.InputsAndServices.*;
 
 
 // Define a CytoPanel class
 public class ControlPanel implements CytoPanelComponent, NetworkAddedListener, NetworkAboutToBeDestroyedListener {
-    private static final int COMBOMAXLENGTH = 100;
+    private static final int COMBOMAXLENGTH = 150;
     private final TaskManager taskManager;
     // data structures
     // UI components
@@ -36,7 +35,7 @@ public class ControlPanel implements CytoPanelComponent, NetworkAddedListener, N
     private JButton analyzeButton;
     private JTextField lossFactor;
     private JPanel paramsPanel;
-    private JComboBox<Color> colorComboBox;
+    private ColorChooserButton colorChooser;
 
     public ControlPanel() {
         this.taskManager = InputsAndServices.taskManager;
@@ -62,10 +61,6 @@ public class ControlPanel implements CytoPanelComponent, NetworkAddedListener, N
 
             taskManager.execute(it);
         });
-        // color selector
-        colorComboBox.addActionListener(actionEvent->{
-            InputsAndServices.color = (Color) colorComboBox.getSelectedItem();
-        });
     }
 
     private void setUserInput() {
@@ -73,6 +68,7 @@ public class ControlPanel implements CytoPanelComponent, NetworkAddedListener, N
         // check if there's no networks input
         InputsAndServices.network = (CyNetwork) networkJComboBox.getSelectedItem();
         loss = Double.parseDouble(lossFactor.getText());
+        InputsAndServices.color = colorChooser.getSelectedColor();
         //Get the selected nodes
         selected = CyTableUtil.getNodesInState(network,"selected",true);
     }
@@ -97,12 +93,13 @@ public class ControlPanel implements CytoPanelComponent, NetworkAddedListener, N
         paramsPanel = new JPanel(new MigLayout("wrap 2", "grow", "grow"));
         paramsPanel.setBorder(new TitledBorder("Parameters"));
         JLabel lossLabel = new JLabel("loss :");
-        lossFactor = new JTextField("1");
+        lossFactor = new JTextField("1.00");
         JLabel color = new JLabel("Select a color :");
-        colorComboBox = new JComboBox<>();
-        colorComboBox.setRenderer(new ColorComboBoxRender<>());
-        ColorShade.colors.forEach(e->colorComboBox.addItem(e));
-        colorComboBox.setSelectedItem(Color.red);
+        colorChooser = new ColorChooserButton(Color.RED);
+        InputsAndServices.color = Color.RED;
+        colorChooser.addColorChangedListener(newColor -> {
+            colorChooser.setSelectedColor(newColor);
+        });
         // analysis button
         analyzeButton = new JButton("Propagate");
         // add to graphsPanel
@@ -112,7 +109,7 @@ public class ControlPanel implements CytoPanelComponent, NetworkAddedListener, N
         paramsPanel.add(lossLabel);
         paramsPanel.add(lossFactor);
         paramsPanel.add(color);
-        paramsPanel.add(colorComboBox);
+        paramsPanel.add(colorChooser);
         // rootPanel
         rootPanel = new JPanel(new MigLayout("wrap 1", "[grow]", "[grow]"));
         rootPanel.add(graphsPanel, "grow");
@@ -138,7 +135,7 @@ public class ControlPanel implements CytoPanelComponent, NetworkAddedListener, N
 
     @Override
     public String getTitle() {
-        return "BNMatch";
+        return "DKernel";
     }
 
     @Override

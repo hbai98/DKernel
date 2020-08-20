@@ -1,10 +1,9 @@
-package internal.Tasks;
+package Cytoscape.plugin.DKernel.internal.Tasks;
 
-import internal.Canvas.ColorShade;
-import internal.util.AlgData;
-import internal.util.CytoUtils;
-import internal.util.InputsAndServices;
-import jdk.internal.util.xml.impl.Input;
+import Cytoscape.plugin.DKernel.internal.Canvas.ColorShade;
+import Cytoscape.plugin.DKernel.internal.util.AlgData;
+import Cytoscape.plugin.DKernel.internal.util.CytoUtils;
+import Cytoscape.plugin.DKernel.internal.util.InputsAndServices;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
 import org.cytoscape.view.model.CyNetworkView;
@@ -16,7 +15,6 @@ import org.jgrapht.alg.util.Pair;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class RenderingTask extends AbstractTask {
     @Override
@@ -31,26 +29,22 @@ public class RenderingTask extends AbstractTask {
         double[] scores = AlgData.scores;
         Pair<Integer, Map<Double, Integer>> res = getVar(scores);
         Map<Double,Integer> scoreColorMap = res.getSecond();// compute the variety of shades based on scores, get score -> shade index
-        int numb = res.getFirst();
+        int numb = res.getFirst()+1;
         List<Color> colors = ColorShade.generateShadesMap(InputsAndServices.color,numb);
         // reverse list for colors -> thin to thick
         Collections.reverse(colors);
-        // 2. create hashmap to link node name and score
-        HashMap<String,Double> nodeScoreMap = new HashMap<>();
-        AtomicInteger i = new AtomicInteger();
-        InputsAndServices.algNet.vertexSet().forEach(v->{
-            nodeScoreMap.put(v,scores[i.get()]);
-            i.incrementAndGet();
-        });
-        // 3. render each node with its score-related color
+        // 2. render each node with its score-related color
         view.getNodeViews().forEach(v->{
             CyNode node = v.getModel();
-            String name = network.getRow(node).get(CyNetwork.NAME, String.class);
-            double score = nodeScoreMap.get(name);
+            double score = network.getRow(node).get(InputsAndServices.SCORES_COLName, Double.class);
             int index = scoreColorMap.get(score);
             Color color = colors.get(index);
             // paint
             view.getNodeView(node).setVisualProperty(BasicVisualLexicon.NODE_FILL_COLOR,color);
+            // score 0 -> white
+            if(score == 0){
+                view.getNodeView(node).setVisualProperty(BasicVisualLexicon.NODE_FILL_COLOR,Color.WHITE);
+            }
         });
     }
 

@@ -1,0 +1,12 @@
+Cytoscape\plugin\DKernel\internal\UI\ControlPanel.class
+Cytoscape\plugin\DKernel\internal\UI\ColorChooserButton$ColorChangedListener.class
+Cytoscape\plugin\DKernel\internal\CyActivator.class
+Cytoscape\plugin\DKernel\internal\CyActivator$1.class
+Cytoscape\plugin\DKernel\internal\util\InputsAndServices.class
+Cytoscape\plugin\DKernel\internal\Tasks\DKernelTask.class
+Cytoscape\plugin\DKernel\internal\util\CytoUtils.class
+Cytoscape\plugin\DKernel\internal\UI\ColorChooserButton.class
+Cytoscape\plugin\DKernel\internal\Canvas\ColorShade.class
+Cytoscape\plugin\DKernel\internal\Tasks\RenderingTask.class
+Cytoscape\plugin\DKernel\internal\Tasks\InputCheckTask.class
+Cytoscape\plugin\DKernel\internal\util\AlgData.class
