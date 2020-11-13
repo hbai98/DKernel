@@ -3,7 +3,7 @@ package Cytoscape.plugin.DKernel.internal.UI;
 import Cytoscape.plugin.DKernel.internal.Tasks.DKernelTask;
 import Cytoscape.plugin.DKernel.internal.Tasks.InputCheckTask;
 import Cytoscape.plugin.DKernel.internal.Tasks.RenderingTask;
-import Cytoscape.plugin.DKernel.internal.util.InputsAndServices;
+import Cytoscape.plugin.DKernel.internal.util.InputAndServices;
 import net.miginfocom.swing.MigLayout;
 import org.cytoscape.application.swing.CytoPanelComponent;
 import org.cytoscape.application.swing.CytoPanelName;
@@ -19,8 +19,10 @@ import org.cytoscape.work.TaskManager;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.io.File;
+import java.util.ArrayList;
 
-import static Cytoscape.plugin.DKernel.internal.util.InputsAndServices.*;
+import static Cytoscape.plugin.DKernel.internal.util.InputAndServices.*;
 
 
 // Define a CytoPanel class
@@ -36,9 +38,12 @@ public class ControlPanel implements CytoPanelComponent, NetworkAddedListener, N
     private JTextField lossFactor;
     private JPanel paramsPanel;
     private ColorChooserButton colorChooser;
+    private JFileChooser networkFileChooser;
+    private JButton networkFileBrowseButton;
+    private JLabel networkFileLabel;
 
     public ControlPanel() {
-        this.taskManager = InputsAndServices.taskManager;
+        this.taskManager = InputAndServices.taskManager;
         // initialize UI settings
         init();
         // add listeners for buttons
@@ -60,15 +65,27 @@ public class ControlPanel implements CytoPanelComponent, NetworkAddedListener, N
             it.append(renderingTask);
 
             taskManager.execute(it);
+            // clean selected nodes
+            InputAndServices.selected = new ArrayList<>();
         });
+        // subnetwork browser button
+        networkFileBrowseButton.addActionListener(actionEvent->{
+            int status = networkFileChooser.showOpenDialog(null);
+            if (status == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = networkFileChooser.getSelectedFile();
+                networkFileLabel.setText(selectedFile.getName());
+            }
+        });
+
     }
 
     private void setUserInput() {
         // shift all parameters from UI to a specific class to export users' information
         // check if there's no networks input
-        InputsAndServices.network = (CyNetwork) networkJComboBox.getSelectedItem();
+        InputAndServices.network = (CyNetwork) networkJComboBox.getSelectedItem();
         loss = Double.parseDouble(lossFactor.getText());
-        InputsAndServices.color = colorChooser.getSelectedColor();
+        InputAndServices.color = colorChooser.getSelectedColor();
+        InputAndServices.subnet = networkFileChooser.getSelectedFile();
         //Get the selected nodes
         selected = CyTableUtil.getNodesInState(network,"selected",true);
     }
@@ -87,8 +104,11 @@ public class ControlPanel implements CytoPanelComponent, NetworkAddedListener, N
             networkJComboBox.setSelectedIndex(0);
         }
         // graphs panel components initialization
-        JPanel graphsPanel = new JPanel(new MigLayout("wrap 2", "grow", "grow"));
+        JPanel graphsPanel = new JPanel(new MigLayout("wrap 1", "grow", "grow"));
         graphsPanel.setBorder(new TitledBorder("Networks"));
+        networkFileLabel = new JLabel("You may upload a txt file of nodes to propagate(or select them manually):");
+        networkFileBrowseButton = new JButton("Browse");
+        networkFileChooser = new JFileChooser();
         //parameters panel
         paramsPanel = new JPanel(new MigLayout("wrap 2", "grow", "grow"));
         paramsPanel.setBorder(new TitledBorder("Parameters"));
@@ -96,15 +116,18 @@ public class ControlPanel implements CytoPanelComponent, NetworkAddedListener, N
         lossFactor = new JTextField("1.00");
         JLabel color = new JLabel("Select a color :");
         colorChooser = new ColorChooserButton(Color.RED);
-        InputsAndServices.color = Color.RED;
+        InputAndServices.color = Color.RED;
         colorChooser.addColorChangedListener(newColor -> {
             colorChooser.setSelectedColor(newColor);
         });
         // analysis button
         analyzeButton = new JButton("Propagate");
         // add to graphsPanel
-        graphsPanel.add(new JLabel("select:"));
+        graphsPanel.add(new JLabel("Select the target network:"));
         graphsPanel.add(networkJComboBox);
+        graphsPanel.add(networkFileLabel);
+        graphsPanel.add(networkFileBrowseButton);
+
         // paramsPanel
         paramsPanel.add(lossLabel);
         paramsPanel.add(lossFactor);

@@ -23,8 +23,8 @@
     <packaging>bundle</packaging>
     <version>1.1</version>
     <description>
-        DKernel uses Diffusion Kernel algorithm to propagate sub-network and
-        return scores for each node when the system reaches a equilibrium state.
+        DKernel uses Diffusion Kernel algorithm to propagate
+        sub-network for pathway analysis, disease vicinity, social network, etc.
     </description>
     <name>DKernel</name>
 

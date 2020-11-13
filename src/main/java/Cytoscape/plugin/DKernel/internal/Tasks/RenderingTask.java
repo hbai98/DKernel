@@ -3,7 +3,7 @@ package Cytoscape.plugin.DKernel.internal.Tasks;
 import Cytoscape.plugin.DKernel.internal.Canvas.ColorShade;
 import Cytoscape.plugin.DKernel.internal.util.AlgData;
 import Cytoscape.plugin.DKernel.internal.util.CytoUtils;
-import Cytoscape.plugin.DKernel.internal.util.InputsAndServices;
+import Cytoscape.plugin.DKernel.internal.util.InputAndServices;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
 import org.cytoscape.view.model.CyNetworkView;
@@ -20,23 +20,23 @@ public class RenderingTask extends AbstractTask {
     @Override
     public void run(TaskMonitor taskMonitor) {
         // get original network view
-        CyNetwork network = InputsAndServices.network;
+        CyNetwork network = InputAndServices.network;
         CyNetworkView view = CytoUtils.getCyNetworkView(network,
-                InputsAndServices.networkViewManager,
-                InputsAndServices.networkViewFactory);
+                InputAndServices.networkViewManager,
+                InputAndServices.networkViewFactory);
         // render the view
         // 1. generate color shades of red
         double[] scores = AlgData.scores;
         Pair<Integer, Map<Double, Integer>> res = getVar(scores);
         Map<Double,Integer> scoreColorMap = res.getSecond();// compute the variety of shades based on scores, get score -> shade index
         int numb = res.getFirst()+1;
-        List<Color> colors = ColorShade.generateShadesMap(InputsAndServices.color,numb);
+        List<Color> colors = ColorShade.generateShadesMap(InputAndServices.color,numb);
         // reverse list for colors -> thin to thick
         Collections.reverse(colors);
         // 2. render each node with its score-related color
         view.getNodeViews().forEach(v->{
             CyNode node = v.getModel();
-            double score = network.getRow(node).get(InputsAndServices.SCORES_COLName, Double.class);
+            double score = network.getRow(node).get(InputAndServices.SCORES_COLName, Double.class);
             int index = scoreColorMap.get(score);
             Color color = colors.get(index);
             // paint

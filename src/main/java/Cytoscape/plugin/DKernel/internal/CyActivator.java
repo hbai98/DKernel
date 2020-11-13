@@ -4,7 +4,7 @@ package Cytoscape.plugin.DKernel.internal;
  * @Institute CS school,Shanghai University
  */
 import Cytoscape.plugin.DKernel.internal.UI.ControlPanel;
-import Cytoscape.plugin.DKernel.internal.util.InputsAndServices;
+import Cytoscape.plugin.DKernel.internal.util.InputAndServices;
 import org.cytoscape.application.swing.AbstractCyAction;
 import org.cytoscape.application.swing.CyAction;
 import org.cytoscape.application.swing.CytoPanelComponent;
@@ -25,8 +25,8 @@ public class CyActivator extends AbstractCyActivator {
 
 
     public void start(BundleContext bc) {
-        InputsAndServices.registrar = getService(bc, CyServiceRegistrar.class);
-        InputsAndServices.initServices();
+        InputAndServices.registrar = getService(bc, CyServiceRegistrar.class);
+        InputAndServices.initServices();
         // Add panel
         ControlPanel cyMainPanel = new ControlPanel();
         // set control panel

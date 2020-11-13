@@ -17,9 +17,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.*;
+import java.io.File;
 import java.util.List;
 
-public final class InputsAndServices {
+public final class InputAndServices {
 
     // Cytoscape services
     public static CyServiceRegistrar registrar;
@@ -37,6 +38,7 @@ public final class InputsAndServices {
     public static UndirectedGraph<String, DefaultEdge> algNet;
     public static Color color;
     public static final String SCORES_COLName = "SCORES";
+    public static File subnet;
 
     public static void initServices() {
         if(registrar!=null){
