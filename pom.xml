@@ -21,7 +21,7 @@
     <groupId>Cytoscape.plugin.Dkernel</groupId>
     <artifactId>Dkernel</artifactId>
     <packaging>bundle</packaging>
-    <version>1.1</version>
+    <version>1.2</version>
     <description>
         DKernel uses Diffusion Kernel algorithm to propagate
         sub-network for pathway analysis, disease vicinity, social network, etc.

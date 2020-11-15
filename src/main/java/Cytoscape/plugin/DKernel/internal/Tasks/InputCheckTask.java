@@ -17,7 +17,7 @@ public class InputCheckTask extends AbstractTask {
             return;
         }
         // no file or nodes are selected
-        if(InputAndServices.selected.size() == 0 || InputAndServices.subnet == null){
+        if(InputAndServices.selected.size() == 0 && InputAndServices.subnet == null){
             taskMonitor.setTitle("Load Error! Please select the subgraph.");
             taskMonitor.showMessage(TaskMonitor.Level.ERROR,"Input error.");
             InputAndServices.logger.error("Select the subnetwork to propagate.");

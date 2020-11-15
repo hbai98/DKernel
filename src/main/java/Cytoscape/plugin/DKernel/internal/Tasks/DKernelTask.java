@@ -15,18 +15,19 @@ import org.cytoscape.work.AbstractTask;
 import org.cytoscape.work.TaskMonitor;
 import org.jgrapht.graph.DefaultEdge;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class DKernelTask extends AbstractTask {
     @Override
-    public void run(TaskMonitor taskMonitor) {
+    public void run(TaskMonitor taskMonitor) throws IOException {
         taskMonitor.setStatusMessage("DKernel running...");
         // set up selected sub-network
         UndirectedGraph<String, DefaultEdge> selectedG = new UndirectedGraph<>(DefaultEdge.class);
         // The selected file takes the priority
         if (InputAndServices.subnet != null) {
-            NetworkReader reader = new NetworkReader();
+            NetworkReader reader = new NetworkReader(InputAndServices.network);
             // read file context to selected nodes
             InputAndServices.selected = reader.read(InputAndServices.subnet);
         }

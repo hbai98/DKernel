@@ -18,9 +18,9 @@ import org.cytoscape.work.TaskManager;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.io.File;
-import java.util.ArrayList;
 
 import static Cytoscape.plugin.DKernel.internal.util.InputAndServices.*;
 
@@ -60,13 +60,12 @@ public class ControlPanel implements CytoPanelComponent, NetworkAddedListener, N
             DKernelTask dkernelTask = new DKernelTask();
             RenderingTask renderingTask = new RenderingTask();
 
+
             it.append(inputCheckTask);
             it.append(dkernelTask);
             it.append(renderingTask);
 
             taskManager.execute(it);
-            // clean selected nodes
-            InputAndServices.selected = new ArrayList<>();
         });
         // subnetwork browser button
         networkFileBrowseButton.addActionListener(actionEvent->{
@@ -87,7 +86,7 @@ public class ControlPanel implements CytoPanelComponent, NetworkAddedListener, N
         InputAndServices.color = colorChooser.getSelectedColor();
         InputAndServices.subnet = networkFileChooser.getSelectedFile();
         //Get the selected nodes
-        selected = CyTableUtil.getNodesInState(network,"selected",true);
+        InputAndServices.selected = CyTableUtil.getNodesInState(network,"selected",true);
     }
 
     public void init() {
@@ -106,9 +105,14 @@ public class ControlPanel implements CytoPanelComponent, NetworkAddedListener, N
         // graphs panel components initialization
         JPanel graphsPanel = new JPanel(new MigLayout("wrap 1", "grow", "grow"));
         graphsPanel.setBorder(new TitledBorder("Networks"));
-        networkFileLabel = new JLabel("You may upload a txt file of nodes to propagate(or select them manually):");
+        networkFileLabel = new JLabel("You may upload a txt file(use ',' to separate) of nodes to propagate(or select them manually):");
         networkFileBrowseButton = new JButton("Browse");
         networkFileChooser = new JFileChooser();
+        FileNameExtensionFilter txtFileFilter = new FileNameExtensionFilter("TEXT FIle for nodes you want to propagate in the network",
+                "txt");
+        networkFileChooser.addChoosableFileFilter(txtFileFilter);
+        networkFileChooser.setFileFilter(txtFileFilter);
+        networkFileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
         //parameters panel
         paramsPanel = new JPanel(new MigLayout("wrap 2", "grow", "grow"));
         paramsPanel.setBorder(new TitledBorder("Parameters"));

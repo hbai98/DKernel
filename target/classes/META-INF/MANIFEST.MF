@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1597921141359
+Bnd-LastModified: 1605423198704
 Build-Jdk: 14
 Built-By: Haotian Bai
 Bundle-Activator: Cytoscape.plugin.DKernel.internal.CyActivator
@@ -9,12 +9,12 @@ Bundle-ClassPath: .,Algorithms-1.0.jar,ejml-all-0.39.jar,jsr305-3.0.2.ja
  9.jar,ejml-fsparse-0.39.jar,jgrapht-core-1.5.0.jar,jheaps-0.13.jar,migl
  ayout-swing-5.2.jar,miglayout-core-5.2.jar,commons-lang3-3.11.jar
 Bundle-Description: DKernel uses Diffusion Kernel algorithm to propagate
-  sub-network and        return scores for each node when the system rea
- ches a equilibrium state.
+         sub-network for pathway analysis, disease vicinity, social netw
+ ork, etc.
 Bundle-ManifestVersion: 2
 Bundle-Name: DKernel
 Bundle-SymbolicName: Cytoscape.plugin
-Bundle-Version: 1.1
+Bundle-Version: 1.2
 Created-By: Apache Maven Bundle Plugin
 Embed-Dependency: * ;scope=!provided|test; groupId=!org.cytoscape
 Embed-Transitive: true
@@ -34,20 +34,20 @@ Embedded-Artifacts: Algorithms-1.0.jar;g="BHT";a="Algorithms";v="1.0",ej
  -lang3-3.11.jar;g="org.apache.commons";a="commons-lang3";v="3.11"
 Import-Package: com.aparapi;resolution:=optional,com.google.common.primi
  tives;resolution:=optional,javax.swing;resolution:=optional,javax.swing
- .border;resolution:=optional,javax.swing.text;resolution:=optional,org.
- apache.commons.io;resolution:=optional,org.apache.poi.hssf.usermodel;re
- solution:=optional,org.apache.poi.ss.usermodel;resolution:=optional,org
- .apache.poi.xssf.usermodel;resolution:=optional,org.cytoscape.applicati
- on.swing;resolution:=optional;version="[3.7,4)",org.cytoscape.event;res
- olution:=optional;version="[3.7,4)",org.cytoscape.model;resolution:=opt
- ional;version="[3.7,4)",org.cytoscape.model.events;resolution:=optional
- ;version="[3.7,4)",org.cytoscape.service.util;resolution:=optional;vers
- ion="[3.7,4)",org.cytoscape.view.model;resolution:=optional;version="[3
- .7,4)",org.cytoscape.view.presentation.property;resolution:=optional;ve
- rsion="[3.7,4)",org.cytoscape.view.vizmap;resolution:=optional;version=
- "[3.7,4)",org.cytoscape.work;resolution:=optional;version="[3.7,4)",org
- .cytoscape.work.undo;resolution:=optional;version="[3.7,4)",org.osgi.fr
- amework;resolution:=optional;version="[1.5,2)",org.slf4j;resolution:=op
- tional;version="[1.7,2)"
+ .border;resolution:=optional,javax.swing.filechooser;resolution:=option
+ al,javax.swing.text;resolution:=optional,org.apache.commons.io;resoluti
+ on:=optional,org.apache.poi.hssf.usermodel;resolution:=optional,org.apa
+ che.poi.ss.usermodel;resolution:=optional,org.apache.poi.xssf.usermodel
+ ;resolution:=optional,org.cytoscape.application.swing;resolution:=optio
+ nal;version="[3.7,4)",org.cytoscape.event;resolution:=optional;version=
+ "[3.7,4)",org.cytoscape.model;resolution:=optional;version="[3.7,4)",or
+ g.cytoscape.model.events;resolution:=optional;version="[3.7,4)",org.cyt
+ oscape.service.util;resolution:=optional;version="[3.7,4)",org.cytoscap
+ e.view.model;resolution:=optional;version="[3.7,4)",org.cytoscape.view.
+ presentation.property;resolution:=optional;version="[3.7,4)",org.cytosc
+ ape.view.vizmap;resolution:=optional;version="[3.7,4)",org.cytoscape.wo
+ rk;resolution:=optional;version="[3.7,4)",org.cytoscape.work.undo;resol
+ ution:=optional;version="[3.7,4)",org.osgi.framework;resolution:=option
+ al;version="[1.5,2)",org.slf4j;resolution:=optional;version="[1.7,2)"
 Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=11))"
 Tool: Bnd-4.2.0.201903051501
