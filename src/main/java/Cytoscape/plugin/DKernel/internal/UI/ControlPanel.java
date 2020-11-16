@@ -60,7 +60,6 @@ public class ControlPanel implements CytoPanelComponent, NetworkAddedListener, N
             DKernelTask dkernelTask = new DKernelTask();
             RenderingTask renderingTask = new RenderingTask();
 
-
             it.append(inputCheckTask);
             it.append(dkernelTask);
             it.append(renderingTask);

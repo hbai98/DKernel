@@ -36,6 +36,10 @@ public class RenderingTask extends AbstractTask {
         // 2. render each node with its score-related color
         view.getNodeViews().forEach(v->{
             CyNode node = v.getModel();
+            // set up boarder
+            view.getNodeView(node).setVisualProperty(BasicVisualLexicon.NODE_BORDER_PAINT,Color.BLACK);
+            view.getNodeView(node).setVisualProperty(BasicVisualLexicon.NODE_BORDER_WIDTH,1.);
+            // transfer score to color shade
             double score = network.getRow(node).get(InputAndServices.SCORES_COLName, Double.class);
             int index = scoreColorMap.get(score);
             Color color = colors.get(index);
@@ -45,6 +49,10 @@ public class RenderingTask extends AbstractTask {
             if(score == 0){
                 view.getNodeView(node).setVisualProperty(BasicVisualLexicon.NODE_FILL_COLOR,Color.WHITE);
             }
+        });
+        // 3. make index nodes' status as selected
+        InputAndServices.selected.forEach(v->{
+            network.getRow(v).set("selected",true);
         });
     }
 

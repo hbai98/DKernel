@@ -58,7 +58,6 @@ public class DKernelTask extends AbstractTask {
             i.incrementAndGet();
         });
 
-        //TODO if it expands to multi-kernel propagation then, scores column may need to coordinate with the previous
         nodeTable.deleteColumn(InputAndServices.SCORES_COLName);
         nodeTable.createColumn(InputAndServices.SCORES_COLName, Double.class, false, 0.);
 
