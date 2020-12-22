@@ -104,7 +104,7 @@ public class ControlPanel implements CytoPanelComponent, NetworkAddedListener, N
         // graphs panel components initialization
         JPanel graphsPanel = new JPanel(new MigLayout("wrap 1", "grow", "grow"));
         graphsPanel.setBorder(new TitledBorder("Networks"));
-        networkFileLabel = new JLabel("You may upload a txt file(use ',' to separate) of nodes to propagate(or select them manually):");
+        networkFileLabel = new JLabel("file to select nodes");
         networkFileBrowseButton = new JButton("Browse");
         networkFileChooser = new JFileChooser();
         FileNameExtensionFilter txtFileFilter = new FileNameExtensionFilter("TEXT FIle for nodes you want to propagate in the network",

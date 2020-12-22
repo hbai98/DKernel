@@ -6,7 +6,6 @@ import DS.Matrix.StatisticsMatrix;
 import DS.Network.UndirectedGraph;
 import Cytoscape.plugin.DKernel.internal.util.AlgData;
 import Cytoscape.plugin.DKernel.internal.util.InputAndServices;
-import IO.AbstractFileReader;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
 import org.cytoscape.model.CyRow;
@@ -17,6 +16,8 @@ import org.jgrapht.graph.DefaultEdge;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class DKernelTask extends AbstractTask {
@@ -24,7 +25,7 @@ public class DKernelTask extends AbstractTask {
     public void run(TaskMonitor taskMonitor) throws IOException {
         taskMonitor.setStatusMessage("DKernel running...");
         // set up selected sub-network
-        UndirectedGraph<String, DefaultEdge> selectedG = new UndirectedGraph<>(DefaultEdge.class);
+        Set<String> selectedG = new HashSet<>();
         // The selected file takes the priority
         if (InputAndServices.subnet != null) {
             NetworkReader reader = new NetworkReader(InputAndServices.network);
@@ -33,7 +34,7 @@ public class DKernelTask extends AbstractTask {
         }
         InputAndServices.selected.forEach(n -> {
             String name = InputAndServices.network.getRow(n).get(CyNetwork.NAME, String.class);// get nodes' name
-            selectedG.addVertex(name);
+            selectedG.add(name);
         });
         // run DK
         DK<String, DefaultEdge> dk = new DK<>(selectedG, InputAndServices.algNet, InputAndServices.loss);
@@ -41,7 +42,7 @@ public class DKernelTask extends AbstractTask {
         // get collum matrix which denotes scores that the nodes get
         StatisticsMatrix mat = dk.getResult();
         // save it for further rendering process
-        AlgData.scores = mat.data();
+        AlgData.scores = mat.getDDRM().data;
 
         // get access to netowrk
         CyNetwork net = InputAndServices.network;

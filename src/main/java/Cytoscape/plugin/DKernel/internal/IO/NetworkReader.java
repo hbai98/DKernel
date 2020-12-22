@@ -1,7 +1,7 @@
 package Cytoscape.plugin.DKernel.internal.IO;
 
 import Cytoscape.plugin.DKernel.internal.util.InputAndServices;
-import IO.AbstractFileReader;
+import IO.Reader.AbstractFileReader;
 import org.cytoscape.model.CyNetwork;
 import org.cytoscape.model.CyNode;
 
